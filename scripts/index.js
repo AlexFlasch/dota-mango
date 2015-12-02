@@ -19,6 +19,7 @@ app.on('ready', function() {
 		icon: './content/img/Mango.png',
 		show: false
 	});
+	mainWindow.setMinimumSize(800, 600);
 
 	splashWindow.loadUrl(viewsUrl + 'splash.html');
 	mainWindow.loadUrl(viewsUrl + 'index.html');

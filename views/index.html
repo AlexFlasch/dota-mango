@@ -8,6 +8,7 @@
 	<script src="../scripts/lib/angular-ui-router.min.js"></script>
 	<script src="../scripts/lib/ui-bootstrap-tpls-0.13.4.min.js"></script>
 	<script src="../scripts/Mango.js"></script>
+	<script src="../scripts/HeroesController.js"></script>
 </head>
 <body ng-app="mango">
 	<div ng-controller="mangoCtrl as mango">
@@ -55,26 +56,23 @@
 			</nav>
 			<div class="container-fluid side-nav-container">
 				<div class="row row-fluid">
-					<div class="col-sm-2">
-						<div class="sidebar-nav">
-							<ul class="nav in">
-								<li>
-									<a href="#" class="hvr-underline-from-right">Home</a>
-								</li>
-								<li>
-									<a href="#" class="hvr-underline-from-right">Matches</a>
-								</li>
-								<li>
-									<a href="#" class="hvr-underline-from-right">Heroes</a>
-								</li>
-							</ul>
-						</div>
+					<div class="sidebar-nav">
+						<ul class="nav in">
+							<li>
+								<a href="#" class="hvr-underline-from-right">Home</a>
+							</li>
+							<li>
+								<a href="#" class="hvr-underline-from-right">Matches</a>
+							</li>
+							<li>
+								<a href="#/heroes" class="hvr-underline-from-right">Heroes</a>
+							</li>
+						</ul>
 					</div>
-					<div class="col-sm-10-offset"></div>
 				</div>
 			</div>
 		</header>
-		<main>
+		<main ui-view>
 			<!-- different page's content goes here -->
 
 			<!-- most played hero icon -->

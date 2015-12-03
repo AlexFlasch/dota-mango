@@ -11,7 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		});
 })
 
-app.controller('HeroesCtrl', ['HeroesService' function(heroesService) {
+app.controller('HeroesCtrl', ['HeroesService', function(heroesService) {
 
 	var scope = this;
 	scope.heroes = heroesService.getHeroes();
@@ -19,7 +19,7 @@ app.controller('HeroesCtrl', ['HeroesService' function(heroesService) {
 }]);
 
 app.service('HeroesService', [function() {
-	return {
-		getHeroes: heroes.getHeroes();
+	this.getHeroes = function() {
+		return heroes.getHeroes();
 	}
 }]);

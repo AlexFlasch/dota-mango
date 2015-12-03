@@ -55,6 +55,10 @@ $robotoUrl: "../font/roboto/";
 	font-style: normal;
 }
 
+.hvr-underline-from-center {
+	@include underline-from-center-with-color($lorange);
+}
+
 body {
 	background-color: $pageBgColor;
 
@@ -126,7 +130,7 @@ body {
 
 header {
 	* {
-		color: $headerFontColor;
+		color: $headerFontColor !important;
 
 		border: none;
 	}
@@ -163,7 +167,7 @@ header {
 				width: 100%;
 				display: block;
 
-				fill: $mango;
+				fill: $headerFontColor;
 
 				position: absolute;
 				top: 0;
@@ -172,49 +176,45 @@ header {
 		}
 	}
 
-	.side-nav-container {
-		position: absolute;
-
-		padding: 0;
-		height: 100vh;
-		width: 175px;
-
-		background-color: $menuBgColor;
-
-		.row-fluid {
-			margin-left: 0;
-			margin-right: 0;
-			height: 100vh;
-
-			[class*='col-'] {
-				padding-right: 0;
-				padding-left: 0;
-				height: 100vh;
-			}
-
-			.col-sm-2 {
-				background-color: $menuBgColor;
-
-				//fix for annoying 1px line between sidenav and navbar
-				margin-top: -3px;
-
-				a {
-					&:hover {
-						// prevent bootstrap's default hover styling.
-						background-color: inherit;
-						color: inherit;
-					}
-				}
-			}
-		}
-	}
+	// .side-nav-container {
+	// 	position: absolute;
+	//
+	// 	padding: 0;
+	// 	height: 100vh;
+	// 	width: 175px;
+	//
+	// 	background-color: $menuBgColor;
+	//
+	// 	.row-fluid {
+	// 		margin-left: 0;
+	// 		margin-right: 0;
+	// 		height: 100vh;
+	//
+	// 		[class*='col-'] {
+	// 			padding-right: 0;
+	// 			padding-left: 0;
+	// 			height: 100vh;
+	// 		}
+	//
+	// 		.col-sm-2 {
+	// 			background-color: $menuBgColor;
+	//
+	// 			//fix for annoying 1px line between sidenav and navbar
+	// 			margin-top: -3px;
+	//
+	// 			a {
+	// 				&:hover {
+	// 					// prevent bootstrap's default hover styling.
+	// 					background-color: inherit;
+	// 					color: inherit;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 main {
-	position: absolute;
-	top: 80px;
-	left: 175px;
-
 	background-color: transparent;
 	color: $white;
 }

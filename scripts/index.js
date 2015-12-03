@@ -1,6 +1,9 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
 
+var apiKey = require('./../data-access/apikey.json').steamApiKey;
+var Crystalys = require('./../data-access/Crystalys.js');
+
 var viewsUrl = 'file://' + __dirname + '/../views/';
 
 app.on('ready', function() {
@@ -27,5 +30,8 @@ app.on('ready', function() {
 	setTimeout(function() {
 		splashWindow.close();
 		mainWindow.show();
+		
+		// debug
+		var api = new Crystalys(apiKey);
 	}, 4000);
 });

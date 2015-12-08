@@ -50,9 +50,11 @@ function Crystalys(key) {
 					}
 				),
 				getMatchHistory: Endpoint(
+					this,
 					'GetMatchHistory/v1',
 					{
 						heroID: Parameter(
+
 							'hero_id',
 							false
 						),
@@ -121,18 +123,11 @@ function Crystalys(key) {
 
 	};
 	// end ApiStructure
-
-	setParents(apiStructure);
 	
 	return apiStructure;
 }
 
 var baseRequestUrl = 'https://api.steampowered.com/';
-
-// recursively define parent pointers for each child in the api structure
-function setParents(node) {
-	if(node)
-}
 
 function generateRequestUrl(parameter) {
 	var requestUrl =
@@ -141,51 +136,53 @@ function generateRequestUrl(parameter) {
 		parameter.endpoint.url +
 		'?key=' + apiKey;
 
-	for(var parameter in parameter.endpoint.parameters)
-}
+	// for(var parameter in parameter.endpoint.parameters)
+};
 
 // base Parameter
 // name : String
 // value : Function (returns Dynamic)
 // required : Boolean
-function Parameter(parentEndpoint, parameterName, parameterRequired) {
+var Parameter = function(parentEndpoint, parameterName, parameterRequired) {
 	var that = this;
 
-	var endpoint = parentEndpoint;
-	var name = parameterName;
-	var required = parameterRequired;
-
-
-	// Retrun the Parameter in a new function that will keep
-	// the properties that were just passed in but will now only
-	// accept value as a parameter, and set value. Kinda hacky. :l
-	var paramProps = {
-		name: that.name,
-		required: that.required
-	}
-
-	return function(value) {
-		var parameterProps = that.paramProps;
-
-		Object.defineProperty(parameterProps, parameterProps.value, value);
-
-		// return the promise object which will allow resolving when needed
-		return rp(generateRequestUrl(that));
-	};
+	this.endpoint = parentEndpoint;
+	this.name = parameterName;
+	this.required = parameterRequired;
 }
 
 // base Endpoint
 // url : String
-function Endpoint(parentComponent, endpointName, endpointUrl) {
+var Endpoint = function(parentComponent, endpointName, endpointUrl) {
 	var that = this;
 
-	var component = parentComponent;
-	var name = endpointName;
-	var url = endpointUrl;
-	var parameters: {};
+	this.component = parentComponent;
+	this.name = endpointName;
+	this.url = endpointUrl;
+	this.parameters = {};
 
-	function addParameter(parameter) {
-		Object.defineProperty(parameters, parameter.name, parameter);
+	this.addParameter = function(parameter) {
+		Object.defineProperty(that.parameters, parameter.name, parameter);
+		var newParameterName = parameter.name;
+		
+		var newParameter = that.parameters[newParameterName];
+		newParameter.parent = that;
+	}
+	
+	this.getResponse = function(params) {
+		var requiredParams = [];
+		
+		for(var param in that.parameters) {
+			if(param.required) {
+				requiredParams.push(param);
+			}
+		}
+		
+		for(var i = 0; i < requiredParams.length; i++) {
+			if(params[requiredParams[i]] === undefined) {
+				throw new Error("A required parameter was undefined.");
+			}
+		}
 	}
 
 	return this;
@@ -193,18 +190,20 @@ function Endpoint(parentComponent, endpointName, endpointUrl) {
 
 // base ApiComponent
 // baseUrl : String
-function ApiComponent(componentName, componentUrl)
+var ApiComponent = function(componentName, componentUrl) {
 	var that = this;
 
-	var name = componentName;
-	var url = comopnentUrl;
-	var endpoints = {};
+	this.name = componentName;
+	this.url = componentUrl;
+	this.endpoints = {};
 
-	function addEndpoint(endpoint) {
-		Object.defineProperty(endpoints, endpoint.name, endpoint);
+	this.addEndpoint = function(endpoint) {
+		Object.defineProperty(that.endpoints, endpoint.name, endpoint);
+		var newEndpointName = endpoint.name;
+		
+		var newEndpoint = that.endpoints[newEndpointName];
+		newEndpoint.parent = that;
 	}
-
-	return this;
 };
 
 

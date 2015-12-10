@@ -143,20 +143,16 @@ function generateRequestUrl(parameter) {
 // name : String
 // value : Function (returns Dynamic)
 // required : Boolean
-var Parameter = function(parentEndpoint, parameterName, parameterRequired) {
-	var that = this;
-
-	this.endpoint = parentEndpoint;
+var Parameter = function(parameterName, parameterRequired) {
 	this.name = parameterName;
 	this.required = parameterRequired;
 }
 
 // base Endpoint
 // url : String
-var Endpoint = function(parentComponent, endpointName, endpointUrl) {
+var Endpoint = function(endpointName, endpointUrl) {
 	var that = this;
 
-	this.component = parentComponent;
 	this.name = endpointName;
 	this.url = endpointUrl;
 	this.parameters = {};
@@ -182,6 +178,12 @@ var Endpoint = function(parentComponent, endpointName, endpointUrl) {
 			if(params[requiredParams[i]] === undefined) {
 				throw new Error("A required parameter was undefined.");
 			}
+		}
+		
+		generateUrl();
+		
+		var generateUrl = function() {
+			var endpoint
 		}
 	}
 
